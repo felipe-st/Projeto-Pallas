@@ -1,12 +1,13 @@
 from core.connection import engine
-from core.configs import Settings
+from core.configs import settings
+import models.__all_models
 
 async def create_tables() -> None:
     print('Criando tabelas...')
 
     async with engine.begin() as conn:
-        await conn.run_sync(Settings.DBBase.metadata.drop_all)
-        await conn.run_sync(Settings.DBBase.metadata.create_all)
+        await conn.run_sync(settings.DBBase.metadata.drop_all)
+        await conn.run_sync(settings.DBBase.metadata.create_all)
 
     print('Tabelas criadas com sucesso...')
 
