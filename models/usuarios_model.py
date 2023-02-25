@@ -7,4 +7,4 @@ class UsuariosModel(settings.DBBase):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String(30), nullable=True)
-    senha = Column(String(30), nullable=True)
+    senha = Column(String(100), nullable=True)

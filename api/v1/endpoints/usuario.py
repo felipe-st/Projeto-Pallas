@@ -13,7 +13,6 @@ router = APIRouter()
 # POST / Signup
 @router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UsuariosSchemaBase)
 async def post_novo_usuario(usuario: UsuariosSchemaBase, db: AsyncSession = Depends(get_session)):
-#    novo_usuario: UsuariosModel = UsuariosModel(nome=usuario.nome, senha=usuario.senha)
     async with db as session:
         query = select(UsuariosModel).filter(UsuariosModel.nome == usuario.nome)
         result = await session.execute(query)
