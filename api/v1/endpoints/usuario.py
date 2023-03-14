@@ -11,7 +11,6 @@ from core.deps import get_session
 from core.auth import autenticar, criar_token_acesso
 from core.security import gerar_hash_senha
 
-
 router = APIRouter()
 
 
@@ -29,6 +28,8 @@ async def post_novo_usuario(usuario: UsuariosSchemaBase, db: AsyncSession = Depe
             await session.commit()
 
             return novo_usuario
+
+
 
         else:
             raise HTTPException(detail='Usuário já existe', status_code=status.HTTP_409_CONFLICT)

@@ -1,6 +1,6 @@
 from core.connection import engine
 from core.configs import settings
-import models.__all_models
+from models import __all_models
 
 async def create_tables() -> None:
     print('Criando tabelas...')

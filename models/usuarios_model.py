@@ -1,4 +1,5 @@
 from sqlalchemy import Integer, String, Column
+from sqlalchemy.orm import relationship
 from core.configs import settings
 
 
