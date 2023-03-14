@@ -12,4 +12,5 @@ class ListaModel(settings.DBBase):
     quantidade = Column(Integer, nullable=True)
     preco = Column(Numeric(3), nullable=False)
     usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+
     usuarios = relationship("UsuariosModel", backref="usuarios", lazy="subquery")
