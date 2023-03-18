@@ -74,3 +74,4 @@ async def delete_item_lista(linha_lista_id: int, db:AsyncSession = Depends(get_s
             return Response(status_code=status.HTTP_204_NO_CONTENT)
         else:
             raise HTTPException(detail='item não encontrado', status_code=status.HTTP_404_NOT_FOUND)
+
