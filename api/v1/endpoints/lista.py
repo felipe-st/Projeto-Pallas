@@ -13,7 +13,10 @@ router = APIRouter()
 
 
 #POST lista
-@router.post('/', status_code=status.HTTP_201_CREATED, response_model=ListaSchemaBase)
+@router.post('/', status_code=status.HTTP_201_CREATED, response_model=ListaSchemaBase,
+             description='Adiciona um novo item na lista de compras.',
+             summary='Adiciona item'
+             )
 async def post_lista(lista: ListaSchemaBase, usuario_logado: UsuariosModel = Depends(get_current_user), db: AsyncSession=Depends(get_session)):
     novo_item_lista: ListaModel = ListaModel(produto=lista.produto, quantidade=lista.quantidade, preco=lista.preco, usuario_id=usuario_logado.id)
     print(f'Usuario logado: {usuario_logado.id}')
@@ -26,7 +29,9 @@ async def post_lista(lista: ListaSchemaBase, usuario_logado: UsuariosModel = Dep
 
 
 #GET lista
-@router.get('/', response_model=List[ListaSchemaBase])
+@router.get('/', response_model=List[ListaSchemaBase],
+            description='Retorna todos os itens da lista, de um determinado usuário.',
+            summary='Retorna todos os itens da lista')
 async def get_lista(usuario_logado: UsuariosModel = Depends(get_current_user), db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ListaModel).filter(ListaModel.usuario_id == usuario_logado.id)
@@ -37,7 +42,9 @@ async def get_lista(usuario_logado: UsuariosModel = Depends(get_current_user), d
 
 
 #PUT lista
-@router.put('/{linha_lista_id}', response_model=ListaSchemaBase, status_code=status.HTTP_202_ACCEPTED)
+@router.put('/{linha_lista_id}', response_model=ListaSchemaBase, status_code=status.HTTP_202_ACCEPTED,
+            description='Permite atualizar determinado item da lista, modificando nome, quantidade ou preço do produto.',
+            summary='Atualizar item da lista')
 async def put_lista(linha_lista_id: int, lista: ListaSchemaBase, db: AsyncSession = Depends(get_session), usuario_logado: UsuariosModel = Depends(get_current_user)):
     async with db as session:
         query = select(ListaModel).filter(ListaModel.id == linha_lista_id).filter(ListaModel.usuario_id == usuario_logado.id)
@@ -60,7 +67,9 @@ async def put_lista(linha_lista_id: int, lista: ListaSchemaBase, db: AsyncSessio
 
 
 #DELETE item lista:
-@router.delete('/{linha_lista_id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{linha_lista_id}', status_code=status.HTTP_204_NO_CONTENT,
+               description='Deletar item da lista.',
+               summary='Deletar item')
 async def delete_item_lista(linha_lista_id: int, db:AsyncSession = Depends(get_session), usuario_logado: UsuariosModel = Depends(get_current_user)):
     async with db as session:
         query = select(ListaModel).filter(ListaModel.id == linha_lista_id).filter(ListaModel.usuario_id == usuario_logado.id)

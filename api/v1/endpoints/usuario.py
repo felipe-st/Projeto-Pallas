@@ -15,7 +15,9 @@ router = APIRouter()
 
 
 # POST / Signup
-@router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UsuariosSchemaBase)
+@router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UsuariosSchemaBase,
+             description='Cadastra um novo usuário, após verificar se o mesmo já existe.',
+             summary='Cadastra novo usuário')
 async def post_novo_usuario(usuario: UsuariosSchemaBase, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(UsuariosModel).filter(UsuariosModel.nome == usuario.nome)
@@ -36,7 +38,9 @@ async def post_novo_usuario(usuario: UsuariosSchemaBase, db: AsyncSession = Depe
 
 
 # POST / Login
-@router.post('/login')
+@router.post('/login',
+             description='Realiza o login do usuário, gerando um token JSON de acesso.',
+             summary='Realiza o login do usuário')
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_session)):
     usuario = await autenticar(nome=form_data.username, senha=form_data.password, db=db)
 
